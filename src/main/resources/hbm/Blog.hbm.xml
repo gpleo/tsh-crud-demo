@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
+	
+<hibernate-mapping package="com.gopersist.demo.tsh">
+	<class name="Blog" table="Blog" dynamic-insert="true" dynamic-update="true">
+		<id name="id" column="id" type="long">
+			<generator class="identity"/>
+		</id>
+		<property name="blogName" column="blogName" type="string" length="200" not-null="true"></property>
+		<property name="content" column="content" type="text" not-null="true"></property>
+		<property name="author" column="author" type="string" length="50"></property>
+	</class>
+</hibernate-mapping>

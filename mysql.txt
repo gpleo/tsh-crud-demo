@@ -1,0 +1,3 @@
+CREATE DATABASE tsh_crud_demo DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+CREATE USER 'tsh'@'%' IDENTIFIED BY 'tsh1';
+GRANT ALL ON tsh_crud_demo.* TO 'tsh'@'%' IDENTIFIED BY 'tsh1';

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       ">
+       
+	<!-- 
+	     - 自动扫描com.gopersist.demo.tsh.dao包，查找@Repository注解的类并将其注册为Bean。
+	 -->
+	<context:component-scan base-package="com.gopersist.demo.tsh.dao" />
+	
+	<!-- 
+	     - Bean的后置处理程序，它会在@Repository注解的类上添加一个通知器，
+	     - 这个通知器将捕获所有持久层异常，并转换为Spring的非检查型异常。
+	 -->
+	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+</beans>
