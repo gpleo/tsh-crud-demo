@@ -3,10 +3,10 @@ package com.gopersist.demo.tsh.thrift;
 import java.util.List;
 
 import org.apache.thrift.TException;
-import org.apache.thrift.protocol.TBinaryProtocol;
+import org.apache.thrift.protocol.TCompactProtocol;
 import org.apache.thrift.protocol.TMultiplexedProtocol;
 import org.apache.thrift.protocol.TProtocol;
-import org.apache.thrift.transport.TFramedTransport;
+import org.apache.thrift.transport.TFastFramedTransport;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 import org.junit.AfterClass;
@@ -22,11 +22,11 @@ public class BlogClient {
 	@BeforeClass
 	public static void init() throws TException {
 		 transport = new TSocket("localhost", 9999);
-		 transport = new TFramedTransport(transport);
+		 transport = new TFastFramedTransport(transport);
 		 transport.open();
 		 
-		// 设置传输协议为 TBinaryProtocol 
-        TProtocol protocol = new TBinaryProtocol(transport);
+		// 设置传输协议为二进制压缩格式
+        TProtocol protocol = new TCompactProtocol(transport);
         TMultiplexedProtocol multiProtocol = new TMultiplexedProtocol(protocol, "blogs");
         blogClient = new com.gopersist.demo.tsh.Blogs.Client(multiProtocol);
         

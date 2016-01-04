@@ -2,10 +2,10 @@ package com.gopersist.demo.tsh.thrift;
 
 import org.apache.thrift.TMultiplexedProcessor;
 import org.apache.thrift.TProcessor;
-import org.apache.thrift.protocol.TBinaryProtocol;
+import org.apache.thrift.protocol.TCompactProtocol;
 import org.apache.thrift.server.TServer;
 import org.apache.thrift.server.TThreadedSelectorServer;
-import org.apache.thrift.transport.TFramedTransport;
+import org.apache.thrift.transport.TFastFramedTransport;
 import org.apache.thrift.transport.TNonblockingServerSocket;
 import org.apache.thrift.transport.TTransportException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,11 +37,11 @@ public class ThriftServer {
 					processor.registerProcessor("blogs", blogProcessor);
 					tArgs.processor(processor);
 					
-					// 使用一个带Buffer的Socket进行IO传输，使用NoblockingServer 的时候会需要使用TFramedTransport
-					tArgs.transportFactory(new TFramedTransport.Factory());
+					// 使用一个带Buffer的Socket进行IO传输，使用NoblockingServer 的时候会需要使用TFramedTransport或TFastFramedTransport
+					tArgs.transportFactory(new TFastFramedTransport.Factory());
 					
-					//二进制协议
-					tArgs.protocolFactory(new TBinaryProtocol.Factory());
+					//二进制压缩格式
+					tArgs.protocolFactory(new TCompactProtocol.Factory());
 					
 					// 多线程半同步半异步的服务模型
 					TServer server = new TThreadedSelectorServer(tArgs);

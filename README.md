@@ -6,3 +6,8 @@ thrift --gen java -o src/main idl/blog.thrift
 
 1. 运行 src/test/java下的com.gopersist.demo.tsh.thrift.ServerStart启动Thrift服务。
 2. JUnit运行 src/test/java 下的com.gopersist.demo.tsh.thrift.BlogClient来调用Thrift服务测试。
+
+---
+
+mysql.txt - 记录创建数据库语句
+thrift.txt - Thrift介绍及说明。

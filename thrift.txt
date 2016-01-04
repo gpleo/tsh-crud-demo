@@ -1,0 +1,33 @@
+Thrift是一个跨语言的服务部署框架，最初由Facebook于2007年开发，2008年进入Apache开源项目。Thrift通过一个中间语言(IDL, 接口定义语言)来定义RPC的接口和数据类型，然后通过一个编译器生成不同语言的代码，并由生成的代码负责RPC协议层和传输层的实现。
+
+Thrift含有三个主要的组件：protocol, transport和server。
+
+1. protocol
+protocol定义了消息是怎样序列化的，有以下几类：
+
+TBinaryProtocol -  二进制编码格式进行数据传输。
+TCompactProtocol -  高效率、密集的二进制编码格式进行数据传输，使用Variable-Length Quantity (VLQ) 编码对数据进行压缩。【推荐】
+TJSONProtocol -  使用JSON的数据编码协议进行数据传输。
+TSimpleJSONProtocol -  JSON只写的协议，适用于通过脚本语言解析
+TDebugProtocol -  在开发的过程中帮助开发人员调试用的，以文本的形式展现方便阅读。
+ 
+2. transport
+transport定义了消息是怎样在客户端和服务端之间通信的，有以下几类：
+
+TSocket -  使用堵塞式I/O进行传输，也是最常见的模式。
+TFramedTransport -  使用非阻塞方式，按块的大小，进行传输，类似于Java中的NIO。
+TFastFramedTransport -  TFramedTransport的改进，TFramedTransport每次写入或读取时都重新创建byte[]，但TFastFramedTransport绐终使用相同的ReadBuffer和WriteBuffer。【推荐】
+TFileTransport -  按照文件的方式进行传输。
+TMemoryTransport -  使用内存I/O，就好比Java中的ByteArrayOutputStream实现。
+TZlibTransport -  使用执行zlib压缩，不提供Java的实现。
+TSaslClientTransport & TSaslServerTransport -  提供SSL检验。
+
+3. server
+server从transport接收序列化的消息，根据protocol反序列化，再调用用户定义的处理器处理，然后将响应序列化后写回transport，有以下几类server：
+
+TSimpleServer -  单线程服务器端使用标准的堵塞式I/O。仅用于测试。
+TThreadPoolServer -  多线程服务器端使用标准的堵塞式I/O。每一个连接都使用一个单独的线程处理，直到连接关闭线程才回到线程池。可以配置线程池的最大线程数，当连接数超过最大线程数时，请求将一直被阻塞，直到有可用的线程。如果允许创建大量线程，它的性能非常优异。
+TNonblockingServer -  单线程服务器端使用非堵塞式I/O，并且实现了Java中的NIO通道。与TSimpleServer相比，它仅仅允许客户端连接，连接后的处理程序依然是单个线程。
+THsHaServer -  多线程服务器端使用非堵塞式I/O（半同步／半异步）。它是TNonblockingServer的子类，解决了只有一个线程来处理消息的问题。它使用一个单独的线程来处理网络I/O，一个Worker线程池来处理消息。
+TThreadedSelectorServer -  多线程服务器端使用非堵塞式I/O（半同步／半异步）。与THsHaServer相比，它使用了一个线程池来处理网络I/O，当网络I/O处理是瓶颈时，它的表现比THsHaServer要好。【推荐】
+ 
