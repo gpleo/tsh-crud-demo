@@ -12,6 +12,7 @@ public class ServerStarter {
 				"applicationContext-dao.xml", 
 				"applicationContext-transaction.xml",
 				"applicationContext-service.xml",
+				"applicationContext-validation.xml",
 				"applicationContext-thrift.xml");
 		
 		ThriftServer thriftServer = ctx.getBean(ThriftServer.class);

@@ -1,0 +1,13 @@
+<constraint-mappings
+        xmlns="http://jboss.org/xml/ns/javax/validation/mapping"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation=
+                "http://www.jboss.org/xml/ns/javax/validation/mapping/validation-mapping-1.1.xsd" version="1.1">
+
+    <default-package>com.gopersist.demo.tsh</default-package>
+    <bean class="Blog" ignore-annotations="true">
+    	<field name="blogName">
+            <constraint annotation="org.hibernate.validator.constraints.NotBlank"/>
+        </field>
+    </bean>
+</constraint-mappings>

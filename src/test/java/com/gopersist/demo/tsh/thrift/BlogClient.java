@@ -10,10 +10,12 @@ import org.apache.thrift.transport.TFastFramedTransport;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.gopersist.demo.tsh.Blog;
+import com.gopersist.demo.tsh.RequestException;
 
 public class BlogClient {
 	private static TTransport transport;
@@ -32,16 +34,6 @@ public class BlogClient {
         
         blogClient.create(new Blog(0, "blog1", "blog content 1"));
         blogClient.create(new Blog(0, "blog2", "blog content 2"));
-        
-        
-        // create
-//        Blog blog = new Blog();
-//        blog.setId("12");
-//        try {
-//       	 client.create(blog);
-//        } catch(RequestException re) {
-//       	 System.out.println(re.errorCode + ", " + re.errorMessage + ", errorFields: " + re.errorFields.toString());
-//        }
 	}
 	
 	@AfterClass
@@ -55,5 +47,15 @@ public class BlogClient {
 		for (Blog b : blogs) {
 			System.out.println(b.getId() + ", " + b.getBlogName() + ", " + b.getContent() + ", " + b.getAuthor());
 		}
+	}
+	
+	@Test
+	public void testCreateFailed() throws TException {
+		try {
+			blogClient.create(new Blog(0, "", ""));
+			Assert.assertTrue(false);
+       } catch(RequestException re) {
+    	   System.out.println(re.errorCode + ", " + re.errorMessage + ", errorFields: " + re.errorFields.toString());
+       }
 	}
 }

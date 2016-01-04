@@ -2,6 +2,8 @@ package com.gopersist.demo.tsh.thrift;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.apache.thrift.TException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,7 +24,7 @@ public class Blogs implements Iface{
 	}
 
 	@Override
-	public Blog create(Blog blog) throws RequestException, TException {
+	public Blog create(@Valid Blog blog) throws RequestException, TException {
 		return blogService.create(blog);
 	}
 
