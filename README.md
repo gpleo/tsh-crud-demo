@@ -10,4 +10,5 @@ thrift --gen java -o src/main idl/blog.thrift
 ---
 
 mysql.txt - 记录创建数据库语句
+
 thrift.txt - Thrift介绍及说明。
